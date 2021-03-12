@@ -1,0 +1,382 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"consul","namespace":"loki"},"spec":{"minReadySeconds":10,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"consul"}},"template":{"metadata":{"annotations":{"consul-hash":"5778cd539088c126eed973ed617144e1"},"labels":{"name":"consul"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchLabels":{"name":"consul"}},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"args":["agent","-ui","-server","-client=0.0.0.0","-config-file=/etc/config/consul-config.json","-bootstrap-expect=1"],"env":[{"name":"CHECKPOINT_DISABLE","value":"1"}],"image":"consul:1.5.3","imagePullPolicy":"IfNotPresent","name":"consul","ports":[{"containerPort":8300,"name":"server"},{"containerPort":8301,"name":"serf"},{"containerPort":8400,"name":"client"},{"containerPort":8500,"name":"api"}],"resources":{"requests":{"cpu":"100m","memory":"500Mi"}},"volumeMounts":[{"mountPath":"/etc/config","name":"consul"}]},{"args":["--namespace=$(POD_NAMESPACE)","--pod-name=$(POD_NAME)"],"env":[{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}}],"image":"weaveworks/consul-sidekick:master-f18ad13","imagePullPolicy":"IfNotPresent","name":"sidekick","volumeMounts":[{"mountPath":"/etc/config","name":"consul"}]},{"args":["--web.listen-address=:8000","--statsd.mapping-config=/etc/config/mapping"],"image":"prom/statsd-exporter:v0.12.2","imagePullPolicy":"IfNotPresent","name":"statsd-exporter","ports":[{"containerPort":8000,"name":"http-metrics"}],"volumeMounts":[{"mountPath":"/etc/config","name":"consul"}]},{"args":["--consul.server=localhost:8500","--web.listen-address=:9107","--consul.timeout=1s"],"image":"prom/consul-exporter:v0.5.0","imagePullPolicy":"IfNotPresent","name":"consul-exporter","ports":[{"containerPort":9107,"name":"http-metrics"}],"volumeMounts":[{"mountPath":"/etc/config","name":"consul"}]}],"serviceAccount":"consul-sidekick","volumes":[{"configMap":{"name":"consul"},"name":"consul"}]}}}}
+  creationTimestamp: "2021-03-12T11:54:13Z"
+  generation: 1
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:minReadySeconds: {}
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:name: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:consul-hash: {}
+            f:labels:
+              .: {}
+              f:name: {}
+          f:spec:
+            f:affinity:
+              .: {}
+              f:podAntiAffinity:
+                .: {}
+                f:requiredDuringSchedulingIgnoredDuringExecution: {}
+            f:containers:
+              k:{"name":"consul"}:
+                .: {}
+                f:args: {}
+                f:env:
+                  .: {}
+                  k:{"name":"CHECKPOINT_DISABLE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8300,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                  k:{"containerPort":8301,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                  k:{"containerPort":8400,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                  k:{"containerPort":8500,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                f:resources:
+                  .: {}
+                  f:requests:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/config"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+              k:{"name":"consul-exporter"}:
+                .: {}
+                f:args: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":9107,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/config"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+              k:{"name":"sidekick"}:
+                .: {}
+                f:args: {}
+                f:env:
+                  .: {}
+                  k:{"name":"POD_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:fieldRef:
+                        .: {}
+                        f:apiVersion: {}
+                        f:fieldPath: {}
+                  k:{"name":"POD_NAMESPACE"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:fieldRef:
+                        .: {}
+                        f:apiVersion: {}
+                        f:fieldPath: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/config"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+              k:{"name":"statsd-exporter"}:
+                .: {}
+                f:args: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8000,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/config"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:serviceAccount: {}
+            f:serviceAccountName: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"consul"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:name: {}
+                f:name: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2021-03-12T11:54:13Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-03-12T11:54:42Z"
+  name: consul
+  namespace: loki
+  resourceVersion: "4867117"
+  selfLink: /apis/apps/v1/namespaces/loki/deployments/consul
+  uid: ea1a6a68-8a7d-49ba-ab19-a44108779850
+spec:
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: consul
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        consul-hash: 5778cd539088c126eed973ed617144e1
+      creationTimestamp: null
+      labels:
+        name: consul
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                name: consul
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - agent
+        - -ui
+        - -server
+        - -client=0.0.0.0
+        - -config-file=/etc/config/consul-config.json
+        - -bootstrap-expect=1
+        env:
+        - name: CHECKPOINT_DISABLE
+          value: "1"
+        image: consul:1.5.3
+        imagePullPolicy: IfNotPresent
+        name: consul
+        ports:
+        - containerPort: 8300
+          name: server
+          protocol: TCP
+        - containerPort: 8301
+          name: serf
+          protocol: TCP
+        - containerPort: 8400
+          name: client
+          protocol: TCP
+        - containerPort: 8500
+          name: api
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/config
+          name: consul
+      - args:
+        - --namespace=$(POD_NAMESPACE)
+        - --pod-name=$(POD_NAME)
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        image: weaveworks/consul-sidekick:master-f18ad13
+        imagePullPolicy: IfNotPresent
+        name: sidekick
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/config
+          name: consul
+      - args:
+        - --web.listen-address=:8000
+        - --statsd.mapping-config=/etc/config/mapping
+        image: prom/statsd-exporter:v0.12.2
+        imagePullPolicy: IfNotPresent
+        name: statsd-exporter
+        ports:
+        - containerPort: 8000
+          name: http-metrics
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/config
+          name: consul
+      - args:
+        - --consul.server=localhost:8500
+        - --web.listen-address=:9107
+        - --consul.timeout=1s
+        image: prom/consul-exporter:v0.5.0
+        imagePullPolicy: IfNotPresent
+        name: consul-exporter
+        ports:
+        - containerPort: 9107
+          name: http-metrics
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/config
+          name: consul
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: consul-sidekick
+      serviceAccountName: consul-sidekick
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: consul
+        name: consul
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2021-03-12T11:54:42Z"
+    lastUpdateTime: "2021-03-12T11:54:42Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2021-03-12T11:54:13Z"
+    lastUpdateTime: "2021-03-12T11:54:42Z"
+    message: ReplicaSet "consul-79d78fb99d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
