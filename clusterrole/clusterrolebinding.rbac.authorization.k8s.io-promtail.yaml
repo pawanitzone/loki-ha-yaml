@@ -1,30 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"name":"promtail"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"promtail"},"subjects":[{"kind":"ServiceAccount","name":"promtail","namespace":"loki"}]}
-  creationTimestamp: "2021-03-12T11:54:03Z"
-  managedFields:
-  - apiVersion: rbac.authorization.k8s.io/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-      f:roleRef:
-        f:apiGroup: {}
-        f:kind: {}
-        f:name: {}
-      f:subjects: {}
-    manager: kubectl-client-side-apply
-    operation: Update
-    time: "2021-03-12T11:54:03Z"
   name: promtail
-  resourceVersion: "4866509"
-  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/promtail
-  uid: 0e240aef-d4fc-43c0-b908-b08b970abd09
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

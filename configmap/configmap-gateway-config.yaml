@@ -18,7 +18,7 @@ data:
       access_log   /dev/stderr  main;
       sendfile     on;
       tcp_nopush   on;
-      resolver kube-dns.kube-system.svc.cluster.local;
+      resolver kube-dns.kube-system.svc;
 
       server {
         listen               80;
@@ -57,26 +57,5 @@ data:
     }
 kind: ConfigMap
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","data":{"nginx.conf":"worker_processes  5;  ## Default: 1\nerror_log  /dev/stderr;\npid        /tmp/nginx.pid;\nworker_rlimit_nofile 8192;\n\nevents {\n  worker_connections  4096;  ## Default: 1024\n}\n\nhttp {\n  default_type application/octet-stream;\n  log_format   main '$remote_addr - $remote_user [$time_local]  $status '\n    '\"$request\" $body_bytes_sent \"$http_referer\" '\n    '\"$http_user_agent\" \"$http_x_forwarded_for\"';\n  access_log   /dev/stderr  main;\n  sendfile     on;\n  tcp_nopush   on;\n  resolver kube-dns.kube-system.svc.cluster.local;\n\n  server {\n    listen               80;\n    auth_basic           “Prometheus”;\n    auth_basic_user_file /etc/nginx/secrets/.htpasswd;\n    proxy_set_header     X-Scope-OrgID 1;\n\n    location = /api/prom/push {\n      proxy_pass       http://distributor.loki.svc.cluster.local:3100$request_uri;\n    }\n\n    location = /api/prom/tail {\n      proxy_pass       http://querier.loki.svc.cluster.local:3100$request_uri;\n      proxy_set_header Upgrade $http_upgrade;\n      proxy_set_header Connection \"upgrade\";\n    }\n\n    location ~ /api/prom/.* {\n      proxy_pass       http://query-frontend.loki.svc.cluster.local:3100$request_uri;\n    }\n\n    location = /loki/api/v1/push {\n      proxy_pass       http://distributor.loki.svc.cluster.local:3100$request_uri;\n    }\n\n    location = /loki/api/v1/tail {\n      proxy_pass       http://querier.loki.svc.cluster.local:3100$request_uri;\n      proxy_set_header Upgrade $http_upgrade;\n      proxy_set_header Connection \"upgrade\";\n    }\n\n    location ~ /loki/api/.* {\n      proxy_pass       http://query-frontend.loki.svc.cluster.local:3100$request_uri;\n    }\n  }\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"gateway-config","namespace":"loki"}}
-  creationTimestamp: "2021-03-12T11:54:00Z"
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:nginx.conf: {}
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-    manager: kubectl-client-side-apply
-    operation: Update
-    time: "2021-03-12T11:54:00Z"
   name: gateway-config
   namespace: loki
-  resourceVersion: "4866489"
-  selfLink: /api/v1/namespaces/loki/configmaps/gateway-config
-  uid: 8cc82092-db22-4cf7-8a20-c8a874fdcebb

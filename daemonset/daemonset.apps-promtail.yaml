@@ -1,153 +1,8 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  annotations:
-    deprecated.daemonset.template.generation: "1"
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{},"name":"promtail","namespace":"loki"},"spec":{"minReadySeconds":10,"selector":{"matchLabels":{"name":"promtail"}},"template":{"metadata":{"annotations":{"promtail-hash":"168fb7df21249fb5442594184297494f"},"labels":{"name":"promtail"}},"spec":{"containers":[{"args":["-config.file=/etc/promtail/promtail.yml"],"env":[{"name":"HOSTNAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}}],"image":"grafana/promtail:2.1.0","imagePullPolicy":"IfNotPresent","name":"promtail","ports":[{"containerPort":80,"name":"http-metrics"}],"readinessProbe":{"httpGet":{"path":"/ready","port":80},"initialDelaySeconds":10,"timeoutSeconds":1},"securityContext":{"privileged":true,"runAsUser":0},"volumeMounts":[{"mountPath":"/etc/promtail","name":"promtail"},{"mountPath":"/var/log","name":"varlog"},{"mountPath":"/var/lib/docker/containers","name":"varlibdockercontainers","readOnly":true}]}],"serviceAccount":"promtail","tolerations":[{"effect":"NoSchedule","operator":"Exists"}],"volumes":[{"configMap":{"name":"promtail"},"name":"promtail"},{"hostPath":{"path":"/var/log"},"name":"varlog"},{"hostPath":{"path":"/var/lib/docker/containers"},"name":"varlibdockercontainers"}]}},"updateStrategy":{"type":"RollingUpdate"}}}
-  creationTimestamp: "2021-03-12T11:54:13Z"
-  generation: 1
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:deprecated.daemonset.template.generation: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-      f:spec:
-        f:minReadySeconds: {}
-        f:revisionHistoryLimit: {}
-        f:selector:
-          f:matchLabels:
-            .: {}
-            f:name: {}
-        f:template:
-          f:metadata:
-            f:annotations:
-              .: {}
-              f:promtail-hash: {}
-            f:labels:
-              .: {}
-              f:name: {}
-          f:spec:
-            f:containers:
-              k:{"name":"promtail"}:
-                .: {}
-                f:args: {}
-                f:env:
-                  .: {}
-                  k:{"name":"HOSTNAME"}:
-                    .: {}
-                    f:name: {}
-                    f:valueFrom:
-                      .: {}
-                      f:fieldRef:
-                        .: {}
-                        f:apiVersion: {}
-                        f:fieldPath: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":80,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                f:readinessProbe:
-                  .: {}
-                  f:failureThreshold: {}
-                  f:httpGet:
-                    .: {}
-                    f:path: {}
-                    f:port: {}
-                    f:scheme: {}
-                  f:initialDelaySeconds: {}
-                  f:periodSeconds: {}
-                  f:successThreshold: {}
-                  f:timeoutSeconds: {}
-                f:resources: {}
-                f:securityContext:
-                  .: {}
-                  f:privileged: {}
-                  f:runAsUser: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-                f:volumeMounts:
-                  .: {}
-                  k:{"mountPath":"/etc/promtail"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                  k:{"mountPath":"/var/lib/docker/containers"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                    f:readOnly: {}
-                  k:{"mountPath":"/var/log"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:serviceAccount: {}
-            f:serviceAccountName: {}
-            f:terminationGracePeriodSeconds: {}
-            f:tolerations: {}
-            f:volumes:
-              .: {}
-              k:{"name":"promtail"}:
-                .: {}
-                f:configMap:
-                  .: {}
-                  f:defaultMode: {}
-                  f:name: {}
-                f:name: {}
-              k:{"name":"varlibdockercontainers"}:
-                .: {}
-                f:hostPath:
-                  .: {}
-                  f:path: {}
-                  f:type: {}
-                f:name: {}
-              k:{"name":"varlog"}:
-                .: {}
-                f:hostPath:
-                  .: {}
-                  f:path: {}
-                  f:type: {}
-                f:name: {}
-        f:updateStrategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxUnavailable: {}
-          f:type: {}
-    manager: kubectl-client-side-apply
-    operation: Update
-    time: "2021-03-12T11:54:13Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:status:
-        f:currentNumberScheduled: {}
-        f:desiredNumberScheduled: {}
-        f:numberAvailable: {}
-        f:numberReady: {}
-        f:observedGeneration: {}
-        f:updatedNumberScheduled: {}
-    manager: kube-controller-manager
-    operation: Update
-    time: "2021-03-12T11:54:51Z"
   name: promtail
   namespace: loki
-  resourceVersion: "4867216"
-  selfLink: /apis/apps/v1/namespaces/loki/daemonsets/promtail
-  uid: 1a8b6d53-98b4-4082-81fe-486875fdeb65
 spec:
   minReadySeconds: 10
   revisionHistoryLimit: 10
@@ -171,7 +26,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: grafana/promtail:2.1.0
+        image: docker.tools.tsys.aws/grafana/promtail:2.1.0
         imagePullPolicy: IfNotPresent
         name: promtail
         ports:
@@ -229,11 +84,4 @@ spec:
     rollingUpdate:
       maxUnavailable: 1
     type: RollingUpdate
-status:
-  currentNumberScheduled: 4
-  desiredNumberScheduled: 4
-  numberAvailable: 4
-  numberMisscheduled: 0
-  numberReady: 4
-  observedGeneration: 1
-  updatedNumberScheduled: 4
+

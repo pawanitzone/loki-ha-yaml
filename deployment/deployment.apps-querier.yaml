@@ -1,160 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"querier","namespace":"loki"},"spec":{"minReadySeconds":10,"replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"querier"}},"template":{"metadata":{"annotations":{"config_hash":"95e9b5a8967e1ff236244aeae42b56d2"},"labels":{"name":"querier"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchLabels":{"name":"querier"}},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"args":["-config.file=/etc/loki/config/config.yaml","-limits.per-user-override-config=/etc/loki/overrides/overrides.yaml","-target=querier"],"image":"grafana/loki:2.1.0","imagePullPolicy":"IfNotPresent","name":"querier","ports":[{"containerPort":3100,"name":"http-metrics"},{"containerPort":9095,"name":"grpc"}],"readinessProbe":{"httpGet":{"path":"/ready","port":3100},"initialDelaySeconds":15,"timeoutSeconds":1},"resources":{"requests":{"cpu":"50m","memory":"100Mi"}},"volumeMounts":[{"mountPath":"/etc/loki/config","name":"loki"},{"mountPath":"/etc/loki/overrides","name":"overrides"}]}],"volumes":[{"configMap":{"name":"loki"},"name":"loki"},{"configMap":{"name":"overrides"},"name":"overrides"}]}}}}
-  creationTimestamp: "2021-03-12T11:54:16Z"
-  generation: 1
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-      f:spec:
-        f:minReadySeconds: {}
-        f:progressDeadlineSeconds: {}
-        f:replicas: {}
-        f:revisionHistoryLimit: {}
-        f:selector:
-          f:matchLabels:
-            .: {}
-            f:name: {}
-        f:strategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxSurge: {}
-            f:maxUnavailable: {}
-          f:type: {}
-        f:template:
-          f:metadata:
-            f:annotations:
-              .: {}
-              f:config_hash: {}
-            f:labels:
-              .: {}
-              f:name: {}
-          f:spec:
-            f:affinity:
-              .: {}
-              f:podAntiAffinity:
-                .: {}
-                f:requiredDuringSchedulingIgnoredDuringExecution: {}
-            f:containers:
-              k:{"name":"querier"}:
-                .: {}
-                f:args: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":3100,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                  k:{"containerPort":9095,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                f:readinessProbe:
-                  .: {}
-                  f:failureThreshold: {}
-                  f:httpGet:
-                    .: {}
-                    f:path: {}
-                    f:port: {}
-                    f:scheme: {}
-                  f:initialDelaySeconds: {}
-                  f:periodSeconds: {}
-                  f:successThreshold: {}
-                  f:timeoutSeconds: {}
-                f:resources:
-                  .: {}
-                  f:requests:
-                    .: {}
-                    f:cpu: {}
-                    f:memory: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-                f:volumeMounts:
-                  .: {}
-                  k:{"mountPath":"/etc/loki/config"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                  k:{"mountPath":"/etc/loki/overrides"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:terminationGracePeriodSeconds: {}
-            f:volumes:
-              .: {}
-              k:{"name":"loki"}:
-                .: {}
-                f:configMap:
-                  .: {}
-                  f:defaultMode: {}
-                  f:name: {}
-                f:name: {}
-              k:{"name":"overrides"}:
-                .: {}
-                f:configMap:
-                  .: {}
-                  f:defaultMode: {}
-                  f:name: {}
-                f:name: {}
-    manager: kubectl-client-side-apply
-    operation: Update
-    time: "2021-03-12T11:54:16Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:deployment.kubernetes.io/revision: {}
-      f:status:
-        f:availableReplicas: {}
-        f:conditions:
-          .: {}
-          k:{"type":"Available"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-          k:{"type":"Progressing"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-        f:observedGeneration: {}
-        f:readyReplicas: {}
-        f:replicas: {}
-        f:updatedReplicas: {}
-    manager: kube-controller-manager
-    operation: Update
-    time: "2021-03-12T11:55:04Z"
   name: querier
   namespace: loki
-  resourceVersion: "4867309"
-  selfLink: /apis/apps/v1/namespaces/loki/deployments/querier
-  uid: cf849812-3de1-448f-a317-b1bddbcd83a6
 spec:
   minReadySeconds: 10
   progressDeadlineSeconds: 600
@@ -171,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        config_hash: 95e9b5a8967e1ff236244aeae42b56d2
+        config_hash: 568e50202a9644f2b1afdb3b5929474e
       creationTimestamp: null
       labels:
         name: querier
@@ -188,7 +36,7 @@ spec:
         - -config.file=/etc/loki/config/config.yaml
         - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -target=querier
-        image: grafana/loki:2.1.0
+        image: docker.tools.tsys.aws/grafana/loki:2.1.0
         imagePullPolicy: IfNotPresent
         name: querier
         ports:
@@ -210,8 +58,8 @@ spec:
           timeoutSeconds: 1
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
+            cpu: "100m"
+            memory: 200Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -233,22 +81,4 @@ spec:
           defaultMode: 420
           name: overrides
         name: overrides
-status:
-  availableReplicas: 3
-  conditions:
-  - lastTransitionTime: "2021-03-12T11:55:04Z"
-    lastUpdateTime: "2021-03-12T11:55:04Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2021-03-12T11:54:16Z"
-    lastUpdateTime: "2021-03-12T11:55:04Z"
-    message: ReplicaSet "querier-7cc77756fc" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 3
-  replicas: 3
-  updatedReplicas: 3
+
