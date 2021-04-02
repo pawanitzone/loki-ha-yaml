@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: grafana
+  name: grafana
+  namespace: default
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+    nodePort: 32091
+  selector:
+    run: grafana
+  sessionAffinity: None
+  type: NodePort
+
