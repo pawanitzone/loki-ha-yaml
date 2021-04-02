@@ -71,7 +71,7 @@ def lambda_handler(event, context):
     """
     log_data = __decode_log_data(event)
     loki_stream = __create_loki_stream(log_data)
-    loki_endpoint = LOKI_PUSH_API.format(os.environ.get('LOKI_ENDPOINT', 'http://loki:password@gateway.loki.svc/loki/api/v1/push'))
+    loki_endpoint = LOKI_PUSH_API.format(os.environ.get('LOKI_ENDPOINT', 'http://loki:password@ip-10-35-13-29.ec2.internal:32091/loki/api/v1/push'))
     a = requests.post(loki_endpoint, data=json.dumps(loki_stream), headers=DEFAULT_HEADERS)
     if a.status_code != 204:
         print("Failed to write to Loki: " + a.text)

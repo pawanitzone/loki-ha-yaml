@@ -1,0 +1,27 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0 
+positions:
+  filename: /var/log/positions.yaml # This location needs to be writeable by promtail. 
+client:
+  url: http://loki:password@ip-10-35-13-29.ec2.internal:32091/loki/api/v1/push 
+
+server:
+  http_listen_port: 0
+  grpc_listen_port: 0
+
+positions:
+  filename: C:\tmp\positions.yaml
+client:
+  url: http://loki:password@ip-10-35-13-29.ec2.internal:32091/loki/api/v1/push
+scrape_configs:
+
+- job_name: windows
+  static_configs:
+    targets: localhost
+    labels:
+      job: winlogs
+    path: C:\var\log*.txt
+  relabel_configs:
+    - source_labels: ['computer']
+      target_label: 'host'

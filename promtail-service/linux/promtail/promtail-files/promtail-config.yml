@@ -1,0 +1,27 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://ev2b833.edc.tpp.tsysecom.com:3100/loki/api/v1/push
+  backoff_config: 
+    max_period: 5s
+    max_retries: 20
+    min_period: 100ms
+  batchsize: 102400
+  batchwait: 1s
+  external_labels: {}
+  timeout: 10s
+
+scrape_configs:
+- job_name: journal
+  journal:
+     max_age: 12h
+     labels:
+        job: ev2b202.tpp-systemd-journal
+  relabel_configs:
+    - source_labels: ['__journal__systemd_unit']
+      target_label: 'unit'

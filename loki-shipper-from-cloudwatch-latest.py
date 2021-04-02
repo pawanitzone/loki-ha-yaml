@@ -73,7 +73,7 @@ def _environment_config():
         "loki_endpoint log_labels log_template log_template_variables log_ignore_non_json",
     )
     config.loki_endpoint = urljoin(
-        os.environ.get("LOKI_ENDPOINT", "http://loki:password@gateway.loki.svc"), "/loki/api/v1/push"
+        os.environ.get("LOKI_ENDPOINT", "http://loki:password@ip-10-35-13-29.ec2.internal:32091"), "/loki/api/v1/push"
     )
     config.log_labels = os.environ.get("LOG_LABELS", "").split(",")
     config.log_template = os.environ.get("LOG_TEMPLATE", "$message")
