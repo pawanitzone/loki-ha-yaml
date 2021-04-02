@@ -26,7 +26,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: docker.tools.tsys.aws/grafana/promtail:2.1.0
+        image: grafana/promtail:2.1.0
         imagePullPolicy: IfNotPresent
         name: promtail
         ports:

@@ -42,7 +42,7 @@ spec:
         env:
         - name: CHECKPOINT_DISABLE
           value: "1"
-        image: docker.tools.tsys.aws/consul:1.8.0
+        image: consul:1.8.0
         imagePullPolicy: IfNotPresent
         name: consul
         ports:
@@ -81,7 +81,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: docker.tools.tsys.aws/weaveworks/consul-sidekick:master-f18ad13
+        image: weaveworks/consul-sidekick:master-f18ad13
         imagePullPolicy: IfNotPresent
         name: sidekick
         resources: {}
@@ -93,7 +93,7 @@ spec:
       - args:
         - --web.listen-address=:8000
         - --statsd.mapping-config=/etc/config/mapping
-        image: docker.tools.tsys.aws/prom/statsd-exporter:v0.20.0
+        image: prom/statsd-exporter:v0.20.0
         imagePullPolicy: IfNotPresent
         name: statsd-exporter
         ports:
@@ -110,7 +110,7 @@ spec:
         - --consul.server=localhost:8500
         - --web.listen-address=:9107
         - --consul.timeout=1s
-        image: docker.tools.tsys.aws/prom/consul-exporter:v0.7.1
+        image: prom/consul-exporter:v0.7.1
         imagePullPolicy: IfNotPresent
         name: consul-exporter
         ports:

@@ -32,7 +32,7 @@ spec:
                 name: gateway
             topologyKey: kubernetes.io/hostname
       containers:
-      - image: docker.tools.tsys.aws/nginx:1.19.3-alpine
+      - image: nginx:1.19.3-alpine
         imagePullPolicy: IfNotPresent
         name: nginx
         ports:

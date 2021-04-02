@@ -37,7 +37,7 @@ spec:
         - -limits.per-user-override-config=/etc/loki/overrides/overrides.yaml
         - -log.level=debug
         - -target=query-frontend
-        image: docker.tools.tsys.aws/grafana/loki:2.1.0
+        image: grafana/loki:2.1.0
         imagePullPolicy: IfNotPresent
         name: query-frontend
         ports:
